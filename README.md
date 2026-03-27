@@ -8,14 +8,42 @@ A Dockerized Node.js application is automatically built, pushed to Amazon ECR, a
 
 ---
 
+## ⭐ Key Highlights
+
+* Designed a **production-ready CI/CD pipeline** on AWS
+* Automated **build, test, and deployment** using GitHub Actions
+* Implemented **containerized deployment** using Docker and Amazon ECS Fargate
+* Integrated **Application Load Balancer (ALB)** for high availability
+* Achieved **zero-downtime deployment**
+* Optimized **cost using on-demand deployment strategy**
+
+---
+
+## 🧠 Core Value Proposition
+
+> Built a fully automated CI/CD pipeline that deploys a containerized application to AWS ECS Fargate with zero manual intervention.
+
+---
+
 ## 🏗️ Architecture Overview
 
+This project demonstrates a full CI/CD pipeline using:
 
-This project demonstrates a production-ready CI/CD pipeline using GitHub Actions, Docker, Amazon ECR, and ECS Fargate behind an Application Load Balancer.
+GitHub → GitHub Actions → Docker → Amazon ECR → Amazon ECS (Fargate) → ALB → Users
+
+---
 
 ## 🏗️ Production Architecture
 
 ![Architecture](./architecture.png)
+
+---
+## 📸 Application Preview
+
+Below is the live UI of the deployed application served via AWS ALB:
+
+![App Screenshot](./app-preview.png)
+
 ---
 
 ## 🧰 Tech Stack
@@ -42,6 +70,23 @@ The deployment pipeline is fully automated:
 4. Image is tagged and pushed to Amazon ECR
 5. ECS service is updated
 6. New container is deployed automatically
+
+---
+
+## 🔄 CI/CD Trigger
+
+The pipeline is triggered automatically by:
+
+* ✅ Push to `main` branch
+* ✅ Manual trigger via GitHub Actions (optional)
+* ✅ Empty commit (for testing pipeline)
+
+Example:
+
+```
+git commit --allow-empty -m "trigger pipeline"
+git push
+```
 
 ---
 
@@ -111,6 +156,16 @@ Example:
 ```
 http://<your-alb-dns>
 ```
+
+---
+
+## 🧠 Design Decisions
+
+* Used **ECS Fargate** to avoid managing servers
+* Used **ALB** for load balancing and health checks
+* Used **ECR** for container image storage
+* Used **GitHub Actions** for fully automated CI/CD
+* Used **on-demand deployment** to reduce AWS cost
 
 ---
 
