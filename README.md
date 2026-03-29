@@ -1,4 +1,4 @@
-# 🚀 Food Menu Service - CI/CD on AWS
+# 🚀 Automated CI/CD Pipeline for Containerized Applications on AWS
 
 ## 📌 Overview
 
