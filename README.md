@@ -194,6 +194,73 @@ This approach is cost-efficient for portfolio projects and demos, while still al
 * Secure credential management using GitHub Secrets
 
 ---
+## 🚧 Challenges & Solutions
+
+### 1. ECS Deployment Not Updating
+
+**Problem:**  
+After pushing a new Docker image to ECR, ECS service did not reflect the updated version.
+
+**Root Cause:**  
+ECS was still using the old task definition revision.
+
+**Solution:**  
+Updated the GitHub Actions workflow to explicitly trigger a new ECS deployment by updating the service with the latest task definition.
+
+---
+
+### 2. Docker Image Not Updating (Cache Issue)
+
+**Problem:**  
+Changes in the application were not reflected after deployment.
+
+**Root Cause:**  
+Docker was using cached layers during build.
+
+**Solution:**  
+Used `--no-cache` during Docker build and ensured unique image tags for each deployment.
+
+---
+
+### 3. AWS Permissions (IAM Issues)
+
+**Problem:**  
+GitHub Actions failed to push images to ECR.
+
+**Root Cause:**  
+IAM user/role did not have sufficient permissions.
+
+**Solution:**  
+Attached required policies:
+- AmazonEC2ContainerRegistryFullAccess
+- AmazonECS_FullAccess
+
+---
+
+### 4. Service Not Accessible via Browser
+
+**Problem:**  
+Application deployed successfully but could not be accessed.
+
+**Root Cause:**  
+Security group / ALB configuration issue.
+
+**Solution:**  
+- Allowed inbound HTTP (port 80)
+- Verified ALB target group health checks
+- Ensured container port mapping (3000)
+
+---
+
+### 5. Cost Management
+
+**Problem:**  
+AWS resources (ECS, ALB) can incur ongoing costs.
+
+**Solution:**  
+Manually cleaned up ECS services and ALB after testing to avoid unnecessary charges.
+
+---
 
 ## 🧠 What I Learned
 
@@ -204,7 +271,14 @@ This approach is cost-efficient for portfolio projects and demos, while still al
 * Debugging deployment pipelines and cloud services
 
 ---
+## 🚀 Future Improvements
 
+- Infrastructure as Code using Terraform
+- Add monitoring with CloudWatch dashboards
+- Implement rolling deployments and health checks
+- Add unit/integration tests
+
+---
 ## 📬 Contact
 
 If you have any questions or feedback, feel free to reach out!
