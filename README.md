@@ -158,17 +158,33 @@ http://<your-alb-dns>
 ```
 
 ---
-
 ## 🧠 Design Decisions
 
-* Used **ECS Fargate** to avoid managing servers
-* Used **ALB** for load balancing and health checks
-* Used **ECR** for container image storage
-* Used **GitHub Actions** for fully automated CI/CD
-* Used **on-demand deployment** to reduce AWS cost
+### Why ECS Fargate instead of EC2
+ECS Fargate was chosen to avoid managing EC2 instances, operating system updates, and cluster capacity planning.  
+Compared to EC2 Auto Scaling, Fargate reduces operational overhead and is better suited for a small-to-medium stateless application where infrastructure simplicity is more important than low-level instance control.
+
+### Why Amazon ECR for image storage
+Amazon ECR was used as the container registry because it integrates natively with ECS and simplifies authentication and image management.  
+Compared to using Docker Hub or another external registry, ECR reduces friction in the deployment workflow and keeps container images within the AWS ecosystem.
+
+### Why GitHub Actions for CI/CD
+GitHub Actions was used to automate the build and deployment pipeline directly from the GitHub repository.  
+Compared to Jenkins or self-hosted CI/CD tools, GitHub Actions requires less setup and maintenance, which makes it a practical choice for lightweight, repository-driven automation.
+
+### Why Application Load Balancer (ALB)
+An Application Load Balancer was used to provide a single public entry point and route traffic to healthy ECS tasks.  
+Compared to direct task access, ALB improves reliability by supporting health checks and traffic distribution, and it also makes the architecture easier to scale later.
+
+### Why manual AWS Console setup for this project
+For this version of the project, AWS resources were provisioned manually through the AWS Console to focus on understanding the deployment flow and service integration first.  
+In a production environment, this infrastructure would be managed using Infrastructure as Code tools such as Terraform to improve repeatability, consistency, and team collaboration.
+
+### Why on-demand deployment strategy
+AWS resources such as ECS services and ALB were cleaned up after testing to avoid unnecessary ongoing cloud costs.  
+This approach is cost-efficient for portfolio projects and demos, while still allowing the system to be redeployed quickly through the existing CI/CD pipeline.
 
 ---
-
 ## 📈 Key Features
 
 * Fully automated CI/CD pipeline
